@@ -1,0 +1,193 @@
+//+debug
+//[compiled] {
+//  outline: 1px solid red;
+//}
+//-debug
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+
+  --mdc-theme-accent: #D81B60;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-family: Roboto, Arial, sans-serif;
+}
+
+.mdc-snackbar {
+  background-color: var(--mdc-theme-primary, #3f51b5);
+
+  &--error {
+    background-color: var(--mdc-theme-accent, #D81B60);
+  }
+
+  &--top {
+    top: 0;
+    bottom: auto;
+    transform: translate(-50%, -100%);
+
+    &.mdc-snackbar--active {
+      transform: translate(-50%, 1rem);
+    }
+  }
+
+  &__text {
+    flex-grow: 1;
+    justify-content: center;
+  }
+}
+
+.flex-grow {
+  flex-grow: 1;
+}
+
+.flex-self-center {
+  align-self: center;
+}
+.flex-self-end {
+  align-self: flex-end;
+}
+.flex-self-start {
+  align-self: flex-start;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+
+  &__label {
+    line-height: 56px;
+    flex: 1 1 auto;
+    display: flex;
+  }
+
+  &__control {
+    line-height: 56px;
+    flex: 1 1 auto;
+    display: flex;
+
+    &--vertical {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}
+
+.balance {
+  &__value {
+  }
+
+  &__currency {
+    font-size: .75em;
+  }
+}
+
+@keyframes swing {
+  0%, 100% {
+    transform: rotate(15deg);
+  }
+
+  50% {
+    transform: rotate(-15deg);
+  }
+}
+
+cube-loader-view {
+  position: relative;
+
+  .logo {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+
+    background: url(/static/logo.svg) no-repeat center;
+    background-size: 33%;
+
+    transform-origin: 50% 66%;
+    animation: swing 2s infinite;
+
+    animation-direction: alternate;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+  }
+}
+
+cube-login-view {
+  .mdc-card__content {
+    display: flex;
+    align-items: stretch;
+  }
+
+  form {
+    flex: 1;
+    padding: 50px 25px;
+
+    input {
+      text-align: center;
+    }
+  }
+}
+
+cube-convert-view.cube-view {
+
+  .mdc-card__content {
+    display: flex;
+    flex-direction: column;
+
+    align-items: stretch;
+    justify-content: center;
+  }
+
+  .account {
+    display: flex;
+    flex-direction: column;
+
+    &--top {
+      align-items: flex-start;
+    }
+
+    &--bottom {
+      align-items: flex-end;
+    }
+
+    .sell-amount {
+      color: darkred;
+    }
+    .buy-amount {
+      color: darkgreen;
+    };
+  }
+
+  .balance {
+    font-size: 3em;
+  }
+
+}
+
+cube-withdraw-view, cube-topup-view {
+  .mdc-card__content {
+    display: flex;
+    align-items: stretch;
+  }
+
+  form {
+    flex: 1;
+    padding: 25px;
+
+    input.mdc-textfield__input {
+      font-size: 200%;
+      text-align: right;
+    }
+  }
+}

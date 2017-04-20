@@ -1,0 +1,193 @@
+* {
+  box-sizing: border-box; }
+
+html, body {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  --mdc-theme-accent: #D81B60; }
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Roboto, Arial, sans-serif; }
+
+.mdc-snackbar {
+  background-color: var(--mdc-theme-primary, #3f51b5); }
+  .mdc-snackbar--error {
+    background-color: var(--mdc-theme-accent, #D81B60); }
+  .mdc-snackbar--top {
+    top: 0;
+    bottom: auto;
+    transform: translate(-50%, -100%); }
+    .mdc-snackbar--top.mdc-snackbar--active {
+      transform: translate(-50%, 1rem); }
+  .mdc-snackbar__text {
+    flex-grow: 1;
+    justify-content: center; }
+
+.flex-grow {
+  flex-grow: 1; }
+
+.flex-self-center {
+  align-self: center; }
+
+.flex-self-end {
+  align-self: flex-end; }
+
+.flex-self-start {
+  align-self: flex-start; }
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch; }
+  .form-group__label {
+    line-height: 56px;
+    flex: 1 1 auto;
+    display: flex; }
+  .form-group__control {
+    line-height: 56px;
+    flex: 1 1 auto;
+    display: flex; }
+    .form-group__control--vertical {
+      display: flex;
+      flex-direction: column; }
+
+.balance__currency {
+  font-size: .75em; }
+
+@keyframes swing {
+  0%, 100% {
+    transform: rotate(15deg); }
+  50% {
+    transform: rotate(-15deg); } }
+cube-loader-view {
+  position: relative; }
+  cube-loader-view .logo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url(/static/logo.svg) no-repeat center;
+    background-size: 33%;
+    transform-origin: 50% 66%;
+    animation: swing 2s infinite;
+    animation-direction: alternate;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards; }
+
+cube-login-view .mdc-card__content {
+  display: flex;
+  align-items: stretch; }
+cube-login-view form {
+  flex: 1;
+  padding: 50px 25px; }
+  cube-login-view form input {
+    text-align: center; }
+
+cube-convert-view.cube-view .mdc-card__content {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center; }
+cube-convert-view.cube-view .account {
+  display: flex;
+  flex-direction: column; }
+  cube-convert-view.cube-view .account--top {
+    align-items: flex-start; }
+  cube-convert-view.cube-view .account--bottom {
+    align-items: flex-end; }
+  cube-convert-view.cube-view .account .sell-amount {
+    color: darkred; }
+  cube-convert-view.cube-view .account .buy-amount {
+    color: darkgreen; }
+cube-convert-view.cube-view .balance {
+  font-size: 3em; }
+
+cube-withdraw-view .mdc-card__content, cube-topup-view .mdc-card__content {
+  display: flex;
+  align-items: stretch; }
+cube-withdraw-view form, cube-topup-view form {
+  flex: 1;
+  padding: 25px; }
+  cube-withdraw-view form input.mdc-textfield__input, cube-topup-view form input.mdc-textfield__input {
+    font-size: 200%;
+    text-align: right; }
+
+input[type=range] {
+  -webkit-appearance: none;
+  margin: 15px 0 5px 0;
+  width: 100%;
+  background: none; }
+  input[type=range]:focus {
+    outline: none; }
+  input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 10px;
+    cursor: pointer;
+    background: none;
+    border-bottom: 1px dashed black; }
+  input[type=range]::-webkit-slider-thumb {
+    background: url("/favicon.ico") no-repeat;
+    background-size: contain;
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+    -webkit-appearance: none;
+    transform: translateY(-15px);
+    transition: transform .25s ease-in-out; }
+  input[type=range]:hover::-webkit-slider-thumb {
+    transform: translateY(-20px); }
+
+cube-app {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  max-height: 450px;
+  max-width: 450px;
+  transform-style: preserve-3d;
+  perspective: 1000px; }
+  cube-app > * {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    opacity: 0;
+    transform-origin: 50% 50% -225px; }
+
+.cube-view {
+  pointer-events: none;
+  border-radius: 3px; }
+  .cube-view[visible], .cube-view--visible {
+    opacity: 1; }
+  .cube-view[active], .cube-view--active {
+    pointer-events: initial; }
+  .cube-view .mdc-card {
+    align-items: stretch;
+    justify-content: center; }
+    .cube-view .mdc-card__primary {
+      flex: 0 0 auto;
+      text-align: center; }
+    .cube-view .mdc-card__content {
+      flex: 1 1 auto;
+      padding: 1rem; }
+    .cube-view .mdc-card__actions {
+      flex: 0 0 auto;
+      justify-content: center; }
+
+@media screen and (max-width: 500px) {
+  cube-app {
+    max-width: 100vw;
+    max-height: 100vw; }
+    cube-app > * {
+      transform-origin: 50% 50% -50vw; } }
+
+/*# sourceMappingURL=cube.css.map */

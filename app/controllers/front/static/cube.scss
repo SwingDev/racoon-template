@@ -1,0 +1,75 @@
+@import "../styles/layout";
+@import "../styles/input";
+
+cube-app {
+  position: relative;
+
+  height: 100%;
+  width: 100%;
+  max-height: 450px;
+  max-width: 450px;
+
+  transform-style: preserve-3d;
+  perspective: 1000px;
+
+  > * {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+    opacity: 0;
+    //backface-visibility: hidden;
+    transform-origin: 50% 50% -225px;
+  }
+}
+
+.cube-view {
+  pointer-events: none;
+  border-radius: 3px;
+
+  &[visible], &--visible {
+    opacity: 1;
+  }
+
+  &[active], &--active {
+    pointer-events: initial;
+  }
+
+  .mdc-card {
+    align-items: stretch;
+    justify-content: center;
+
+    &__primary {
+      flex: 0 0 auto;
+      text-align: center;
+    }
+
+    &__content {
+      flex: 1 1 auto;
+
+      padding: 1rem;
+    }
+
+    &__actions {
+      flex: 0 0 auto;
+      justify-content: center;
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  cube-app {
+    max-width: 100vw;
+    max-height: 100vw;
+
+    > * {
+      transform-origin: 50% 50% -50vw;
+    }
+  }
+}

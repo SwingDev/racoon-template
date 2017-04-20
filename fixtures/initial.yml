@@ -1,0 +1,160 @@
+fixtures:
+  - model: User
+    keys: ["email"]
+    data:
+      email: "user1@hacking.co"
+      password: "qazwsx"
+      password_confirmation: "qazwsx"
+
+  - model: User
+    keys: ["email"]
+    data:
+      email: "bill@microsoft.com"
+      password: "i_use_a_macbook"
+      password_confirmation: "i_use_a_macbook"
+
+  - model: User
+    keys: ["email"]
+    data:
+      email: "tim@apple.com"
+      password: "someone_got_a_charger?"
+      password_confirmation: "someone_got_a_charger?"
+
+  - model: User
+    keys: ["email"]
+    data:
+      email: "nigerian_prince@getrichfast.com"
+      password: "i_got_monies"
+      password_confirmation: "i_got_monies"
+
+  - model: Currency
+    keys: ["id"]
+    data:
+      id: "USD"
+      name: "US Dollar"
+  - model: Currency
+    keys: ["id"]
+    data:
+      id: "PLN"
+      name: "Polski Złoty"
+
+  - model: Rate
+    keys: ["fromId", "toId"]
+    data:
+      fromId: "USD"
+      toId: "USD"
+      rate: 1
+  - model: Rate
+    keys: ["fromId", "toId"]
+    data:
+      fromId: "PLN"
+      toId: "PLN"
+      rate: 1
+  - model: Rate
+    keys: ["fromId", "toId"]
+    data:
+      fromId: "PLN"
+      toId: "USD"
+      rate: 0.25100
+  - model: Rate
+    keys: ["fromId", "toId"]
+    data:
+      fromId: "USD"
+      toId: "PLN"
+      rate: 3.92772
+
+  - model: Account
+    keys: ["userId", "currencyId"]
+    data:
+      user:
+        email: "user1@hacking.co"
+      currencyId: "PLN"
+      balance: 0
+  - model: Account
+    keys: ["userId", "currencyId"]
+    data:
+      user:
+        email: "user1@hacking.co"
+      currencyId: "USD"
+      balance: 0
+
+  - model: CreditCard
+    keys: ["userId", "name"]
+    data:
+      user:
+        email: "user1@hacking.co"
+      name: "Debit Card"
+      type: "VISA"
+      number: "5306762013019398"
+
+  - model: Account
+    keys: ["userId", "currencyId"]
+    data:
+      user:
+        email: "bill@microsoft.com"
+      currencyId: "PLN"
+      balance: 0
+  - model: Account
+    keys: ["userId", "currencyId"]
+    data:
+      user:
+        email: "bill@microsoft.com"
+      currencyId: "USD"
+      balance: 100000
+
+  - model: CreditCard
+    keys: ["userId", "name"]
+    data:
+      user:
+        email: "bill@microsoft.com"
+      name: "Debit Card"
+      type: "VISA"
+      number: "5282312671753090"
+
+  - model: Account
+    keys: ["userId", "currencyId"]
+    data:
+      user:
+        email: "tim@apple.com"
+      currencyId: "PLN"
+      balance: 0
+  - model: Account
+    keys: ["userId", "currencyId"]
+    data:
+      user:
+        email: "tim@apple.com"
+      currencyId: "USD"
+      balance: 100000
+
+  - model: CreditCard
+    keys: ["userId", "name"]
+    data:
+      user:
+        email: "tim@apple.com"
+      name: "Debit Card"
+      type: "VISA"
+      number: "5312144838442646"
+
+  - model: Account
+    keys: ["userId", "currencyId"]
+    data:
+      user:
+        email: "nigerian_prince@getrichfast.com"
+      currencyId: "PLN"
+      balance: 0
+  - model: Account
+    keys: ["userId", "currencyId"]
+    data:
+      user:
+        email: "nigerian_prince@getrichfast.com"
+      currencyId: "USD"
+      balance: 100000
+
+  - model: CreditCard
+    keys: ["userId", "name"]
+    data:
+      user:
+        email: "nigerian_prince@getrichfast.com"
+      name: "Debit Card"
+      type: "VISA"
+      number: "5125183972645181"

@@ -1,0 +1,168 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    title Racoon Exchange
+    meta(name='viewport' content='width=device-width, initial-scale=1')
+
+    link(rel="icon" href="/favicon.ico?v=1")
+    link(rel='stylesheet' href='//unpkg.com/material-components-web@latest/dist/material-components-web.min.css')
+    link(rel='stylesheet' href='/static/cube.css')
+
+    script(defer src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js" integrity="sha256-8E6QUcFg1KTnpEU8TFGhpTGHw5fJqB9vCms3OhAYLqw=" crossorigin="anonymous")
+    script(defer src="//cdnjs.cloudflare.com/ajax/libs/EventEmitter/5.1.0/EventEmitter.min.js" integrity="sha256-ClKga/yBRl1Mh2B+vtIfsEuNuY/aj9Lf37WfSCG3hoE=" crossorigin="anonymous")
+    script(defer src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.6/handlebars.min.js" integrity="sha256-1O3BtOwnPyyRzOszK6P+gqaRoXHV6JXj8HkjZmPYhCI=" crossorigin="anonymous")
+    script(defer src='//unpkg.com/material-components-web@latest/dist/material-components-web.min.js')
+    script(defer src='/static/vendor/focus-trap.js')
+
+    script(src='/static/app.js' defer)
+    script(src='/static/api.js' defer)
+    script(src='/static/auth.js' defer)
+    script(src='/static/account.js' defer)
+    script(src='/static/cube-app.js' defer)
+    script(src='/static/cube-view.js' defer)
+    script(src='/static/cube-loader.js' defer)
+    script(src='/static/cube-login.js' defer)
+    script(src='/static/cube-convert.js' defer)
+    script(src='/static/cube-withdraw.js' defer)
+    script(src='/static/cube-topup.js' defer)
+    script(src='/static/bootstrap.js' defer)
+
+
+  mixin radio(name)
+    - var id = attributes.id == null ? 'radio-' + name + '-' + attributes.value : attributes.id
+    .mdc-form-field
+      .mdc-radio
+        input.mdc-radio__native-control(type="radio" name=name id=id)&attributes(attributes)
+        .mdc-radio__background
+          .mdc-radio__outer-circle
+          .mdc-radio__inner-circle
+      label(id=id+'-label' for=id): block
+
+  mixin input
+      .mdc-textfield
+        input.mdc-textfield__input&attributes(attributes)
+
+  mixin input-fw
+      .mdc-textfield.mdc-textfield--fullwidth
+        input.mdc-textfield__input&attributes(attributes)
+
+  body.mdc-typography
+    cube-app.project-racoon
+
+      cube-loader-view.cube-view--visible
+        .logo
+
+      cube-login-view#login.mdc-card
+        section.mdc-card__primary
+          h1.mdc-card__title.mdc-card__title--large Login
+
+        section.mdc-card__content
+          form#loginForm(on='submit' do='submit(event)')
+            .mdc-textfield.mdc-textfield--fullwidth
+              input#email(type="email" name='email' placeholder='Email' required).mdc-textfield__input
+
+            .mdc-textfield.mdc-textfield--fullwidth
+              input#password(type="password" name='password' placeholder='Password' required).mdc-textfield__input
+
+        section.mdc-card__actions
+          button(type='submit' form='loginForm').mdc-button.mdc-button--raised.mdc-button--primary.mdc-card__action
+            | Login
+
+      cube-convert-view#convert.mdc-card
+        section.mdc-card__primary
+          h1.mdc-card__title.mdc-card__title--large Convert
+
+        form#convertForm(on='submit' do='convert(event)').mdc-card__content
+          script(type='text/template')
+            div.account.account--top
+              .balance
+                span.balance__value {{accounts.0.balance}}
+                span.balance__currency {{accounts.0.label}}
+              .balance-change(bind-balance-change='{{accounts.0.id}}') &nbsp;
+
+            input(name='conversionIndex' type='range' min="-{{accounts.0.balance}}" max="{{accounts.1.balance}}" value="0" step="0.01" on='input' do='rangeChanged(event)')
+
+            div.account.account--bottom
+              .balance-change(bind-balance-change='{{accounts.1.id}}') &nbsp;
+              .balance.flex-self-end
+                span.balance__value {{accounts.1.balance}}
+                span.balance__currency {{accounts.1.label}}
+
+
+        section.mdc-card__actions
+          button(on='click' do='navigate("topup")').mdc-button.mdc-button--raised.mdc-card__action
+            | Top up
+
+          button(type="submit" form='convertForm').mdc-button.mdc-button--raised.mdc-button--primary.mdc-card__action
+            | Convert
+
+          button(on='click' do='navigate("withdraw")').mdc-button.mdc-button--raised.mdc-card__action
+            | Withdraw
+
+
+      cube-withdraw-view#withdraw.mdc-card
+          section.mdc-card__primary
+            h1.mdc-card__title.mdc-card__title--large Withdraw
+          section.mdc-card__content
+              form#withdrawForm(on='submit' do='submit(event)')
+                section.form-group
+                  .form-group__control
+                    .mdc-form-field.flex-grow
+                      +input-fw()(name='amount' type='number' min=0 required placeholder='Amount')
+
+                section.form-group.form-group--vertical
+                  .form-group__control.flex-self-end
+                    script(type='text/template')
+                      | {{#each accounts}}
+                      +radio('fromAccount')(value='{{id}}' '{{checked @first}}') {{currencyId}}
+                      | {{/each}}
+
+                section.form-group
+                  .form-group__label.flex-self-center To card
+                  .form-group__control.form-group__control--vertical.flex-self-center
+                    script(type='text/template')
+                      | {{#each cards}}
+                      +radio('toCard')(value='{{id}}' '{{checked @first}}') {{type}} {{name}}
+                      | {{/each}}
+
+          section.mdc-card__actions
+            button.hvr-bob(type='submit' form='withdrawForm').mdc-button.mdc-button--raised.mdc-button--primary.mdc-card__action
+              | Withdraw
+
+      cube-topup-view#topup.mdc-card
+        section.mdc-card__primary
+          h1.mdc-card__title.mdc-card__title--large Top up
+        section.mdc-card__content
+            form#topupForm(on='submit' do='submit(event)')
+
+              section.form-group.form-group--vertical
+                .form-group__control
+                  .mdc-form-field.flex-grow
+                    +input-fw()(name='amount' type='number' min=0 required placeholder='Amount')
+
+              section.form-group.form-group--vertical
+                .form-group__control.flex-self-end
+                  script(type='text/template')
+                    | {{#each accounts}}
+                    +radio('toAccount')(value='{{id}}' '{{checked @first}}') {{currencyId}}
+                    | {{/each}}
+
+              section.form-group.form-group--vertical
+                .form-group__label.flex-self-center Pay with
+                .form-group__control.form-group__control--vertical.flex-self-center
+                  script(type='text/template')
+                    | {{#each cards}}
+                    +radio('fromCard')(value='{{id}}' '{{checked @first}}') {{type}} {{name}}
+                    | {{/each}}
+
+
+
+        section.mdc-card__actions
+          button(type='submit' form='topupForm').mdc-button.mdc-button--raised.mdc-button--primary.mdc-card__action
+            | Top up
+
+    .mdc-snackbar.mdc-snackbar--top(aria-live="assertive" aria-atomic="true" aria-hidden="true")
+      .mdc-snackbar__text
+      .mdc-snackbar__action-wrapper
+        button.mdc-button.mdc-snackbar__action-button(type="button")

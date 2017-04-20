@@ -1,0 +1,39 @@
+version: '2'
+services:
+  postgresql:
+    image: postgres:9.5
+    volumes:
+      - "./.pgdata:/var/lib/postgresql/data"
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: rac
+      POSTGRES_USER: rac
+      POSTGRES_PASSWORD: rac
+  api:
+    build: .
+    command: forever -c "nodemon -e js,json,yml --exitcrash" server.js
+    volumes:
+      - "./app:/app/app"
+      - "./config:/app/config"
+      - "./coverage:/app/coverage"
+      - "./fixtures:/app/fixtures"
+      - "./server.js:/app/server.js"
+    ports:
+      - "80:8080"
+    environment:
+      DATABASE_URL: postgres://rac:rac@postgresql:5432/rac
+      DATABASE_RO_URL: postgres://rac:rac@postgresql:5432/rac
+      BANK_URL: http://bank-mock:8080/api
+      BANK_SECRET: local
+
+  redis:
+    image: redis
+  bank-mock:
+    image: swingdevelopment/racoon-bank:9bfae0b5f65ccf0ef79de0a196c6faa59a59fc7c
+    ports:
+      - "81:8080"
+    environment:
+      REDIS_PORT: 6379
+      REDIS_HOST: redis
+      REDIS_PASS:

@@ -1,0 +1,27 @@
+image: docker:17.03
+
+variables:
+  DOCKER_DRIVER: overlay
+
+services:
+- docker:dind
+
+stages:
+  - deploy
+
+before_script:
+  - apk add --update git make openssh
+
+deploy_dev: 
+  stage: deploy
+  script:
+    - mkdir -p ${HOME}/.ssh
+    - echo "Host *" > ${HOME}/.ssh/config
+    - echo "  StrictHostKeyChecking no" > ${HOME}/.ssh/config
+    - chmod 400 ${HOME}/.ssh/config
+    - echo "${SWARM_SSH_KEY}" > ${HOME}/.ssh/id_rsa
+    - chmod 600 ${HOME}/.ssh/id_rsa
+    - make build
+    - make deploy_swarm 
+  only: 
+    - master
